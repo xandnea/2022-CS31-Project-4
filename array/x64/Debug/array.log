@@ -1,0 +1,3 @@
+﻿  array.cpp
+C:\Users\xandn\source\repos\array\array\array.cpp(247): warning C4715: 'split': not all control paths return a value
+  array.vcxproj -> C:\Users\xandn\source\repos\array\x64\Debug\array.exe
