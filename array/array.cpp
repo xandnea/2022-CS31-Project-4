@@ -1,19 +1,20 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <cassert>
 
 using namespace std;
 
 int appendToAll(string a[], int n, string value) {
-    
+
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
     for (int i = 0; i < n; i++) {
         a[i] += value;
-        cout << a[i] << endl;
+        //cout << a[i] << endl;
     }
 
     return n;
@@ -22,7 +23,7 @@ int appendToAll(string a[], int n, string value) {
 int lookup(const string a[], int n, string target) {
 
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -32,7 +33,7 @@ int lookup(const string a[], int n, string target) {
         }
     }
 
-    cerr << "Target not found in array, Return code: ";
+    //cerr << "Target not found in array, Return code: ";
     return -1;
 }
 
@@ -41,7 +42,7 @@ int positionOfMax(const string a[], int n) {
     int empty = 0;
 
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -50,29 +51,31 @@ int positionOfMax(const string a[], int n) {
             //cout << "array is at " << a[i] << " : " << a[i][j] << " max is " << max << " : " << max[j] << endl;
             if (a[i][j] < max[j]) {
                 break;
-            } else if (a[i][j] > max[j]) {
+            }
+            else if (a[i][j] > max[j]) {
                 max = a[i];
                 break;
             }
-        }  
+        }
     }
 
     if (empty == n) {
-        cerr << "No interesting elements in array, Return code: ";
+        //cerr << "No interesting elements in array, Return code: ";
         return -1;
     }
 
-    cout << max << endl;
+    //cout << max << endl;
     return lookup(a, n, max);
 }
 
 int rotateLeft(string a[], int n, int pos) {
-    
+
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
-    } else if (n <= pos) {
-        cerr << "String in position " << pos << " is already on the right or is non-existant, Return code: ";
+    }
+    else if (n <= pos) {
+        //cerr << "String in position " << pos << " is already on the right or is non-existant, Return code: ";
         return -2;
     }
 
@@ -85,7 +88,7 @@ int rotateLeft(string a[], int n, int pos) {
     a[n - 1] = temp;
 
     for (int i = 0; i < n; i++) {
-        cout << a[i] << " ";
+        //cout << a[i] << " ";
     }
 
     return pos;
@@ -95,7 +98,7 @@ int countRuns(string a[], int n) {
     int runs = 0;
 
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -110,12 +113,12 @@ int countRuns(string a[], int n) {
 
 
 int flip(string a[], int n) {
-    int i = 0; 
+    int i = 0;
     int j = n - 1;
     string temp;
 
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -133,9 +136,9 @@ int flip(string a[], int n) {
 
 int differ(const string a1[], int n1, const string a2[], int n2) {
     int i = 0;
-    
+
     if ((n1 < 0) || (n2 < 0)) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -143,13 +146,14 @@ int differ(const string a1[], int n1, const string a2[], int n2) {
         if (a1[i] != a2[i]) {
             return i;
         }
-        
+
         i++;
     }
 
     if (n1 <= n2) {
         return n1;
-    } else {
+    }
+    else {
         return n2;
     }
 }
@@ -158,7 +162,7 @@ int subsequence(const string a1[], int n1, const string a2[], int n2) {
     int count = 0;
 
     if ((n1 < 0) || (n2 < 0)) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -168,7 +172,8 @@ int subsequence(const string a1[], int n1, const string a2[], int n2) {
             if (count == n2) {
                 return ((i + 1) - n2);
             }
-        } else {
+        }
+        else {
             count = 0;
         }
     }
@@ -180,7 +185,7 @@ int subsequence(const string a1[], int n1, const string a2[], int n2) {
 int lookupAny(const string a1[], int n1, const string a2[], int n2) {
 
     if ((n1 < 0) || (n2 < 0)) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
@@ -199,17 +204,22 @@ int split(string a[], int n, string splitter) {
     string current;
     string temp;
     int sorted = 0;
-    int splitPoint = 0;
 
     if (n < 0) {
-        cerr << "N is less than zero, Return code: ";
+        //cerr << "N is less than zero, Return code: ";
         return -1;
     }
 
     for (int sort = 0; sort <= (n - sorted); sort++) {
         for (int i = 1; i < n; i++) {
+
             current = a[i - 1];
             for (int j = 0; j < current.size(); j++) { // tony dave tim jon // "b", "d", "g", "f", "e", "c", "a"
+                
+                if (a[i] == "") {
+                    i++;
+                }
+
                 if (a[i][j] < current[j]) {
                     temp = a[i];
                     a[i] = current;
@@ -227,11 +237,10 @@ int split(string a[], int n, string splitter) {
         }
     }
 
-    /*for (int i = 0; i < n; i++) {
-        cout << a[i] << " ";
-    }
+    //for (int i = 0; i < n; i++) {
+    //    cout << a[i] << " ";
+    //}
 
-    cout << "Splitter: " << splitter << " position: ";*/
 
     for (int i = 1; i < n; i++) {
         for (int j = 0; j < splitter.size(); j++) {
@@ -239,21 +248,54 @@ int split(string a[], int n, string splitter) {
                 break;
             }
             else if (a[i][j] > splitter[j]) {
+                //cout << "Splitter: " << splitter << " position: " << i << endl;;
                 return i;
                 break;
             }
         }
     }
+
+    return -1;
 }
 
 int main() {
-    string people[5] = { "boris", "gordon", "rishi", "liz", "john" };
+    
+    string h[7] = { "rishi", "margaret", "gordon", "tony", "", "john", "liz" };
+    assert(lookup(h, 7, "john") == 5);
+    assert(lookup(h, 7, "gordon") == 2);
+    assert(lookup(h, 2, "gordon") == -1);
+    assert(positionOfMax(h, 7) == 3);
+
+    string g[4] = { "rishi", "margaret", "liz", "theresa" };
+    assert(differ(h, 4, g, 4) == 2);
+    assert(appendToAll(g, 4, "?") == 4 && g[0] == "rishi?" && g[3] == "theresa?");
+    assert(rotateLeft(g, 4, 1) == 1 && g[1] == "liz?" && g[3] == "margaret?");
+
+    string e[4] = { "gordon", "tony", "", "john" };
+    assert(subsequence(h, 7, e, 4) == 2);
+
+    string d[5] = { "margaret", "margaret", "margaret", "tony", "tony" };
+    assert(countRuns(d, 5) == 2);
+
+    string f[3] = { "liz", "gordon", "tony" };
+    assert(lookupAny(h, 7, f, 3) == 2);
+    assert(flip(f, 3) == 3 && f[0] == "tony" && f[2] == "liz");
+
+    assert(split(h, 7, "liz") == 3);
+
+    split(h, 7, "liz");
+    cout << "All tests succeeded" << endl;
+    
+    
+    
+    
+    /*string people[5] = { "boris", "gordon", "rishi", "liz", "john" };
     string pm_one[6] = { "david", "liz", "margaret", "tony", "gordon", "boris" };
     string pm_two[6] = { "david", "tonz", "margaret", "tony", "gordon", "boris" };
     string mp[5] = { "john", "david", "liz", "theresa", "margaret" };
     string alpha[7] = { "a", "b", "c", "d", "e", "f", "g" };
     string alpha2[7] = { "b", "d", "g", "f", "e", "c", "a" };
-    string empty[3] = { "", "", "" }; 
+    string empty[3] = { "", "", "" };
     string d_one[9] = { "tony", "boris", "rishi", "rishi", "gordon", "gordon", "gordon", "rishi", "rishi" };
     string d_two[9] = { "tony", "tony", "tony", "tony", "rishi", "rishi", "rishi", "rishi", "rishi" };
     string d_three[9] = { "tony", "tony", "tony", "rishi", "rishi", "gordon", "rishi", "rishi", "rishi" };
@@ -264,13 +306,13 @@ int main() {
     string names2[10] = { "john", "rishi" };
     string set1[10] = { "david", "boris", "rishi", "margaret" };
     string set2[10] = { "tony", "gordon" };
-    string set3[10] = { "gordon", "david", "liz" };
-    
+    string set3[10] = { "gordon", "david", "liz" };*/
+
     /*cout << appendToAll(people, 5, "!!!") << endl;
     cout << appendToAll(people, -1, "!!!") << endl;
     cout << appendToAll(people, 5, "") << endl;*/
-    
-    /*cout << lookup(people, 5, "john") << endl;  
+
+    /*cout << lookup(people, 5, "john") << endl;
     cout << lookup(people, 5, "joHn") << endl;
     cout << lookup(people, -2, "john") << endl;*/
 
