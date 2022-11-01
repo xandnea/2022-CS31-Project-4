@@ -46,13 +46,13 @@ int positionOfMax(const string a[], int n) {
         return -1;
     }
 
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < max.size(); j++) {
+    for (int i = 1; i < n; i++) { // for each word in the string array 
+        for (int j = 0; j < max.size(); j++) { // for each letter in the string 
             //cout << "array is at " << a[i] << " : " << a[i][j] << " max is " << max << " : " << max[j] << endl;
-            if (a[i][j] < max[j]) {
+            if (a[i][j] < max[j]) { // if any letters are earlier in the alphabet (lower ascii code), go to the next word
                 break;
             }
-            else if (a[i][j] > max[j]) {
+            else if (a[i][j] > max[j]) { // if a letter is later in the alphabet (higher ascii code), that word is the new max
                 max = a[i];
                 break;
             }
@@ -70,22 +70,18 @@ int positionOfMax(const string a[], int n) {
 
 int rotateLeft(string a[], int n, int pos) {
 
-    if (n < 0) {
+    if ((n < 0) || (n <= pos) || (pos > n)) {
         //cerr << "N is less than zero, Return code: ";
         return -1;
-    }
-    else if (n <= pos) {
-        //cerr << "String in position " << pos << " is already on the right or is non-existant, Return code: ";
-        return -2;
     }
 
     string temp = a[pos];
 
-    for (int i = pos; i < n - 1; i++) {
+    for (int i = pos; i < n - 1; i++) { // starting at the position given in parameter, move everything else to the left
         a[i] = a[i + 1];
     }
 
-    a[n - 1] = temp;
+    a[n - 1] = temp; // add the word that was originally at the given position to the end of the string array
 
     for (int i = 0; i < n; i++) {
         //cout << a[i] << " ";
@@ -210,22 +206,22 @@ int split(string a[], int n, string splitter) {
         return -1;
     }
 
-    for (int sort = 0; sort <= (n - sorted); sort++) {
-        for (int i = 1; i < n; i++) {
+    for (int sort = 0; sort <= (n - sorted); sort++) { // for n times
+        for (int i = 1; i < n; i++) { // iterating through each string in the string array; starting at index one, current is set to index i-1
 
             current = a[i - 1];
-            for (int j = 0; j < current.size(); j++) { // tony dave tim jon // "b", "d", "g", "f", "e", "c", "a"
+            for (int j = 0; j < current.size(); j++) { // iterating through each letter in an individual string
                 
-                if (a[i] == "") {
+                if (a[i] == "") { // skip empty strings
                     i++;
                 }
 
-                if (a[i][j] < current[j]) {
+                if (a[i][j] < current[j]) { // takes the alphabetically latest string and moves it to the back of the array
                     temp = a[i];
                     a[i] = current;
                     a[i - 1] = temp;
 
-                    if (i == (n - 1)) {
+                    if (i == (n - 1)) { // if string is already at the back, add to sorted (shortens the amount of times that the outmost for loop has to run)
                         sorted++;
                     }
                     break;
@@ -242,7 +238,7 @@ int split(string a[], int n, string splitter) {
     //}
 
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; i++) { // figure out which position the splitter would be in
         for (int j = 0; j < splitter.size(); j++) {
             if (a[i][j] < splitter[j]) {
                 break;
@@ -269,6 +265,8 @@ int main() {
     string g[4] = { "rishi", "margaret", "liz", "theresa" };
     assert(differ(h, 4, g, 4) == 2);
     assert(appendToAll(g, 4, "?") == 4 && g[0] == "rishi?" && g[3] == "theresa?");
+    assert(rotateLeft(g, 0, 0) == -1 && g[1] == "margaret?" && g[3] == "theresa?");
+    assert(rotateLeft(g, 4, 5) == -1 && g[1] == "margaret?" && g[3] == "theresa?");
     assert(rotateLeft(g, 4, 1) == 1 && g[1] == "liz?" && g[3] == "margaret?");
 
     string e[4] = { "gordon", "tony", "", "john" };
