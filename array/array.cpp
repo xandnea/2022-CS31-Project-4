@@ -162,6 +162,10 @@ int subsequence(const string a1[], int n1, const string a2[], int n2) {
         return -1;
     }
 
+    if (n2 == 0) {
+        return 0;
+    }
+
     for (int i = 0; i < n1; i++) {
         if (a1[i] == a2[count]) {
             count++;
