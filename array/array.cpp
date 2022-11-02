@@ -39,9 +39,8 @@ int lookup(const string a[], int n, string target) {
 
 int positionOfMax(const string a[], int n) {
     string max = a[0];
-    int empty = 0;
 
-    if (n < 0) {
+    if (n <= 0) {
         //cerr << "N is less than zero, Return code: ";
         return -1;
     }
@@ -57,11 +56,6 @@ int positionOfMax(const string a[], int n) {
                 break;
             }
         }
-    }
-
-    if (empty == n) {
-        //cerr << "No interesting elements in array, Return code: ";
-        return -1;
     }
 
     //cout << max << endl;
@@ -211,13 +205,32 @@ int split(string a[], int n, string splitter) {
     }
 
     for (int sort = 0; sort <= (n - sorted); sort++) { // for n times
+        
+        int correctlySorted = 0;
+        
         for (int i = 1; i < n; i++) { // iterating through each string in the string array; starting at index one, current is set to index i-1
 
             current = a[i - 1];
+
+            if (a[i] == a[i + 1]) {
+                /*cout << a[i] << " and " << a[i+1] << " ARE DUPLICATE" << endl;*/
+                continue; // skips duplicates
+            }
+            
             for (int j = 0; j < current.size(); j++) { // iterating through each letter in an individual string
                 
-                if (a[i] == "") { // skip empty strings
-                    i++;
+                if (a[i] == "") { // move empty strings to the front of the array
+                    for (int k = i; k >= 0; k--) {
+                        if (k != 0) {
+                            current = a[k - 1]; // current is left of ""
+
+                            temp = a[k]; // temp is now ""
+                            a[k] = current; // previous position of "" is now whatever was to it's left
+                            a[k - 1] = temp; // left position is now ""
+                        } else {
+                            a[k] = "";
+                        }
+                    }
                 }
 
                 if (a[i][j] < current[j]) { // takes the alphabetically latest string and moves it to the back of the array
@@ -230,19 +243,25 @@ int split(string a[], int n, string splitter) {
                     }
                     break;
                 }
-                else if (a[i][j] > splitter[j]) {
+                else if (a[i][j] > current[j]) {
+                    correctlySorted++;
+                    /*cout << a[i] << " is correctly sorted" << endl;
+                    cout << "Correctly sorted: " << correctlySorted << endl;*/
                     break;
                 }
             }
         }
+
+        if (correctlySorted == (n-1)) {
+            break;
+        }
     }
 
-    //for (int i = 0; i < n; i++) {
-    //    cout << a[i] << " ";
-    //}
-
-
     for (int i = 1; i < n; i++) { // figure out which position the splitter would be in
+        if (splitter == a[i]) {
+            return i;
+        }
+
         for (int j = 0; j < splitter.size(); j++) {
             if (a[i][j] < splitter[j]) {
                 break;
@@ -250,7 +269,6 @@ int split(string a[], int n, string splitter) {
             else if (a[i][j] > splitter[j]) {
                 //cout << "Splitter: " << splitter << " position: " << i << endl;;
                 return i;
-                break;
             }
         }
     }
@@ -260,11 +278,15 @@ int split(string a[], int n, string splitter) {
 
 int main() {
     
-    string h[7] = { "rishi", "margaret", "gordon", "tony", "", "john", "liz" };
+    string h[7] = { "rishi", "margaret", "gordon", "tony", "", "john", "liz" }; // "" g j l m r t 
+    string test[7] = { "abc", "bcd", "bcd", "def", "efg", "fgh", "" };
+    string alpha[7] = { "a", "b", "c", "d", "e", "f", "g" };
+
     assert(lookup(h, 7, "john") == 5);
     assert(lookup(h, 7, "gordon") == 2);
     assert(lookup(h, 2, "gordon") == -1);
     assert(positionOfMax(h, 7) == 3);
+    
 
     string g[4] = { "rishi", "margaret", "liz", "theresa" };
     assert(differ(h, 4, g, 4) == 2);
@@ -275,7 +297,6 @@ int main() {
 
     string e[4] = { "gordon", "tony", "", "john" };
     assert(subsequence(h, 7, e, 4) == 2);
-
     string d[5] = { "margaret", "margaret", "margaret", "tony", "tony" };
     assert(countRuns(d, 5) == 2);
 
@@ -284,8 +305,8 @@ int main() {
     assert(flip(f, 3) == 3 && f[0] == "tony" && f[2] == "liz");
 
     assert(split(h, 7, "liz") == 3);
+    assert(split(h, 7, "john") == 2);
 
-    split(h, 7, "liz");
     cout << "All tests succeeded" << endl;
     
     
